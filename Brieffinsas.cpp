@@ -15,7 +15,7 @@ typedef struct tache{
 	date datecreation;
 }tache;
 
-void ajouter (tache d){
+void ajouter (tache tache[],int n){
 	char k;
 	while (1) {
 		system("color 8F");
@@ -24,43 +24,51 @@ void ajouter (tache d){
         if (k == 'n') {
             break;
         } else if (k == 'y'){
-    char name[numberstock];
-	char description[numberstock];
+        	if (n<numberstock)
 	printf("enter name your taches : ");
-	scanf("%s",d.name);
+	scanf(" %[^\n]",tache[n].name);
 	printf("enter description your taches : ");
-	scanf("%s",d.description);
+	scanf(" %[^\n]",tache[n].description);
 	printf("enter la jour :  ");
-	scanf("%d",&d.datecreation.jour);
+	scanf("%d",&tache[n].datecreation.jour);
 	printf("enter la mois :  ");
-	scanf("%d",&d.datecreation.mois);
+	scanf("%d",&tache[n].datecreation.mois);
 	printf("anne :  ");
-	scanf("%d",&d.datecreation.annee);
-
-	
+	scanf("%d",&tache[n].datecreation.annee);
+	n++;
 }else{
 	system("color 4C");
 	k =1;
 }}
 }
 void afficher (tache tache[],int n){
+	char k;
+while (1) {
+		system("color 8F");
+        printf("\nSouhaitez-vous afficher ? y/n: ");
+        scanf(" %c", &k);
+        if (k == 'n') {
+        	system("color 4C");
+            break;
+        } else if (k == 'y'){
 		int i = 0;
-    for (i = 0; i < n; i++)
-    {
-        printf("name %s description %s date %d/%d/%d \n",tache[i].name,
+   			 for (i = 0; i < n; i++){
+        printf("Name : %s Description : %s Date : %d/%d/%d \n",tache[i].name,
 														tache[i].description,
 														tache[i].datecreation.jour,
 														tache[i].datecreation.mois,
-														tache[i].datecreation.annee);
-    }
-}
+														tache[i].datecreation.annee);}
+	}else {	
+	k = 1;
+	}
+}}
 int main(){
 	int choix;
 	int name[numberstock];
  	int description[numberstock] ;
-	int n=0;
+ 	int n;
 	choix=1;
-	tache lestaches[numberstock];
+	tache tache[numberstock];
 	while (choix !=0) {
 		system("color 8F");
 		system("cls");
@@ -84,12 +92,11 @@ switch(choix){
 		printf(" Quite \n");
 		break;
 	case 1 :
-afficher(lestaches,n);
-
+afficher(tache,n);
 		break;
 	case 2:
-ajouter(lestaches[n]);
-n++;
+ajouter(tache,n);
+	n++;
 		break;
 	case 3:
 printf("3- modifier une taches \n");
