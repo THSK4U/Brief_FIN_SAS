@@ -12,26 +12,31 @@ typedef struct date{
 typedef struct tache{
 	char name[numberstock];
 	char description[numberstock];
+	int priority;
 	date datecreation;
 }tache;
 
 void ajouter (tache tache[],int n){
     if (n<numberstock){
-	printf("enter name your taches : ");
+	printf("Enter nom de tache : ");
 	scanf(" %[^\n]",tache[n].name);
-	printf("enter description your taches : ");
+	printf("Enter description tache : ");
 	scanf(" %[^\n]",tache[n].description);
-	printf("enter la jour :  ");
+	printf("Enter la priorite (1-5): ");
+    scanf("%d", &tache[n].priority);
+	printf("Enter le jour :  ");
 	scanf("%d",&tache[n].datecreation.jour);
-	printf("enter la mois :  ");
+	printf("Enter le mois :  ");
 	scanf("%d",&tache[n].datecreation.mois);
-	printf("anne :  ");
+	printf("Enter l'annee :  ");
 	scanf("%d",&tache[n].datecreation.annee);
 	n++;
 }else{
-	printf("Le nombre des tache autorise est de 150");
+	printf("Le nombre des taches autorise est 150");
 	system("color 4C");
 }}
+
+
 void afficher (tache tache[],int n){
 	char k;
 while (1) {
@@ -44,21 +49,35 @@ while (1) {
         } else if (k == 'y'){
 		int i;
    			 for (i = 0; i < n; i++){
-        printf("Name : %s Description : %s Date : %d/%d/%d \n",tache[i].name,
+        printf("nom de la tâche : %s  | description : %s | Priorite : %d | la date d'echeance : %d/%d/%d \n",tache[i].name,
 														tache[i].description,
+														tache[i].priority,
 														tache[i].datecreation.jour,
 														tache[i].datecreation.mois,
 														tache[i].datecreation.annee);}
 	}else {	
-	k = 1;
+	system("color 4C");
 	}
 }}
+
+void afficheavecnomber (tache tache[],int n){
+		int i;
+   			 for (i = 0; i < n; i++){
+	printf("nombre de la tache %d | nom de la tâche : %s | Description : %s | Priorite : %d | la date d'échéance :  %d/%d/%d \n",i,tache[i].name,
+														tache[i].description,
+														tache[i].priority,
+														tache[i].datecreation.jour,
+														tache[i].datecreation.mois,
+														tache[i].datecreation.annee);}
+}
+
+
 void modifier (tache tache[],int n){
 	int nombermodifier;
 	char k;
 	int i;
-	int index;
-	while(k=1){
+	int index = 0;
+	while(1){
 		system("color 8F");
         printf("\nSouhaitez-vous afficher ? y/n: ");
         scanf(" %c", &k);
@@ -66,20 +85,15 @@ void modifier (tache tache[],int n){
         	system("color 4C");
             break;
         } else if (k == 'y'){
-        	for (i = 0; i < n; i++){
-	printf("nombre de la tache %d Name : %s Description : %s Date : %d/%d/%d \n",i,tache[i].name,
-														tache[i].description,
-														tache[i].datecreation.jour,
-														tache[i].datecreation.mois,
-														tache[i].datecreation.annee);}
-	printf("Saisissez nombre de la tache que vous souhaitez modifier : ");
+    afficheavecnomber(tache,n);
+	printf("Saisissez numero de la tache que vous souhaitez modifier : ");
 	scanf("%d",&index);
-	printf("1- name 2-description 3-jour 4-mois 5-annee ");
+	if (index >=0 && index < n) {
+	printf("1-nom 2-description 3-jour 4-mois 5-annee ");
 	scanf("%d",&nombermodifier);
-	if (index >= 1 && index < n) {
 	switch(nombermodifier){
 	case 1 :
-		printf("modifier name : ");
+		printf("modifier nom : ");
 		scanf(" %[^\n]", tache[index].name);
 		break;
 	case 2 :
@@ -102,40 +116,62 @@ void modifier (tache tache[],int n){
 		system("color 4C");
 		printf("\t\t\t\t\t\t Le choix n'existe pas \n");
 		break;
-} 	return;
-}	k = 1;   }}}
-void supprimer ();{
+} 	
+return;
+}}}}
 
+
+void supprimer(tache tache[],int n){
+	int nombersupprimer;
+	int i;
+	int indexsupprimer;
+    afficheavecnomber(tache,n);
+	printf("Saisissez numero de la tache que vous souhaitez supprimer : ");
+	scanf("%d",&indexsupprimer);   
+	if (indexsupprimer >=0 && indexsupprimer < n) {
+        for (i = indexsupprimer; i < n - 1; i++) {
+            tache[i] = tache[i + 1];
+    system("color 2A");
+    printf("Supprimer avec succes");
+    }
+}else{ 
+	system("color 4C");
+	printf("\t\t\t\t\t\t La tache n'existe pas \n");
+	}
 }
+
+
 
 int main(){
 	int choix;
 	int name[numberstock];
  	int description[numberstock] ;
  	int n,i;
-	choix=1;
+	choix;
 	tache tache[numberstock];
 	while (choix !=0) {
 		system("color 8F");
-		system("cls");
+		
         printf("\n\n\n\n");
         printf("\t\t\t\t\t\t");
 printf("menu : \n\n");
 printf("\t\t\t\t\t\t");
 printf("1- afficher la liste des taches \n");
 printf("\t\t\t\t\t\t");
-printf("2- Ajouter une taches \n");
+printf("2- Ajouter une tache \n");
 printf("\t\t\t\t\t\t");
-printf("3- modifier une taches \n");
+printf("3- modifier une tache \n");
 printf("\t\t\t\t\t\t");
-printf("4- retirer une taches \n");
+printf("4- supprimer une tache \n");
 printf("\t\t\t\t\t\t");
-printf("0- Quite \n");
+printf("5- trier Par date \n");
+printf("\t\t\t\t\t\t");
+printf("0- Quiter \n");
 printf("\n\n\n\n\n\t\t\t Votre choix : ");
 scanf("%d",&choix);
 switch(choix){
 	case 0 :
-		printf(" Quite \n");
+		printf(" Quiter \n");
 		break;
 	case 1 :
 afficher(tache,n);
@@ -148,13 +184,16 @@ ajouter(tache,n);
 modifier (tache,n);
 		break;
 		case 4:
-printf("4- retirer une taches \n");
+supprimer (tache,n);
+n--;
 		break;	
+		case 5:
+printf("5- trier Par date \n");
+		break;
 	default :
 		system("color 4C");
 		printf("\t\t\t\t\t\t Le choix n'existe pas \n");
 		break;
     return 0;
-}
-}}
+}}}
 
